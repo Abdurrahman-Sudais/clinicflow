@@ -9,6 +9,8 @@ const site = {
   email: 'amara@clinicflow.top',
   team: [
     {name: 'Amara Eze', role: 'Founder', initials: 'AE', bio: 'Amara founded ClinicFlow after seeing clinic teams spend their mornings chasing confirmations, typing referral letters and filling gaps left by missed appointments. Amara leads product, partnerships with facilities and every pilot.', focus: ['Product', 'Healthcare operations', 'Facility pilots']},
+    {name: "Ngozi Okonkwo", role: "Co-founder", initials: "NO", bio: "Ngozi leads clinic partnerships and customer success at ClinicFlow: onboarding pilot clinics, shaping front-desk and care-team workflows and turning staff feedback into product changes.", focus: ["Clinic operations", "Pilot onboarding", "Front-desk workflow"]},
+    {name: "Ibrahim Danjuma", role: "CTO", initials: "ID", bio: "Ibrahim leads engineering: scheduling, the no-show risk model, documentation drafting, role-based access to clinical notes and the AWS platform it runs on.", focus: ["Platform architecture", "Privacy and access control", "AWS infrastructure"]},
   ],
   app: {
     title: 'Front desk',

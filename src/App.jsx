@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import site from './content.js';
+import {Count, Cycle, Marquee, Stats, Words} from './Flow.jsx';
 import {appointments, hhmm, notes, waitlist} from './data.js';
 import {ACCURACY, BASE_RATE, draftSummary, level, risk, suggestions} from './engine.js';
 import {ACROSS, SERVICES, STAGES, WHY} from './aws.js';
@@ -37,14 +38,19 @@ function Header() {
   );
 }
 
+const CYCLE = ["private hospitals", "specialist clinics", "diagnostic centres"];
+const MQ = ["Private hospitals", "Specialist clinics", "Diagnostic centres", "Appointment scheduling", "No-show risk", "Waitlist offers", "Reminders", "Documentation drafts", "Follow-up tasks", "Role-based access", "Practice managers", "Front-desk teams"];
+const STATS = [[16, "appointments on the sample day"], [600, "past visits behind the no-show model"], [3, "waitlist patients matched to open slots"], [4, "roles with separate access"]];
+
 function Hero() {
   const cards = [appointments[1], appointments[4], appointments[11], appointments[7]];
   return (
     <section className="hero" aria-labelledby="hero-title">
       <div className="blob" aria-hidden="true" /><div className="blob b2" aria-hidden="true" />
       <p className="badge" data-r>For private hospitals, specialist clinics and diagnostic centres</p>
-      <h1 id="hero-title" data-r>Less administration.<br /><em>More time for care.</em></h1>
+      <h1 id="hero-title"><Words>Less administration.<br /><em>More time for care.</em></Words></h1>
       <p className="lede" data-r>{site.about}</p>
+        <p className="fcy" data-r style={{'--d': '200ms'}}><Cycle lead="Built for" items={CYCLE} /></p>
       <div className="ctas" data-r><a className="btn" href="#demo" data-magnetic data-cursor="Book">Request a demo</a><a className="btn soft" href="/app" data-cursor="Try">Open the front desk</a></div>
       <div className="floaters" aria-hidden="true">{cards.map((a, i) => { const p = risk(a); return (
         <div key={a.id} className={`float f${i} ${level(p)}`}><span className="time">{hhmm(a.time)}</span><b>{a.type}</b><small>{a.clinician} · {a.patient}</small><span className="risk">{level(p) === 'high' ? `${Math.round(p * 100)}% may not attend` : a.reminder === 'confirmed' ? 'Confirmed' : 'Reminder sent'}</span></div>); })}</div>
@@ -168,10 +174,9 @@ function Technology() {
 }
 
 function Team() {
-  const p = site.team[0];
   return (
     <section className="sec" id="team" aria-labelledby="team-title">
-      <div className="team" data-r><span className="av" aria-hidden="true">{p.initials}</span><div><p className="kicker">Founder</p><h2 id="team-title">{p.name}</h2><p>{p.bio}</p><ul className="tags">{p.focus.map((f) => <li key={f}>{f}</li>)}</ul></div></div>
+      <div className="team-head"><p className="kicker">Founding team</p><h2 id="team-title">The people building {site.name}.</h2></div><div className="team-list">{site.team.map((p, i) => (<div key={p.name} style={{'--d': `${i * 90}ms`}} className="team" data-r><span className="av" aria-hidden="true">{p.initials}</span><div><p className="kicker">{p.role}</p><h3 className="tname">{p.name}</h3><p>{p.bio}</p><ul className="tags">{p.focus.map((f) => <li key={f}>{f}</li>)}</ul></div></div>))}</div>
     </section>
   );
 }
@@ -223,7 +228,7 @@ function Footer() {
   );
 }
 
-function Home() { return (<><Hero /><Day /><Features /><Docs /><Privacy /><Who /><Pricing /><Technology /><Team /><Demo /><Faq /><Contact /></>); }
+function Home() { return (<><Hero /><Marquee items={MQ} label="Who and what it is built for" /><Stats items={STATS} /><Day /><Features /><Docs /><Privacy /><Who /><Pricing /><Technology /><Team /><Demo /><Faq /><Contact /></>); }
 
 const LEGAL = {
   privacy: ['Privacy notice', [['This website', 'ClinicFlow is a proposed product. This website and the front desk run in your browser on synthetic data; no patient data is collected.'], ['Front desk', 'Your changes are kept in your browser’s local storage (key clinicflow-desk-v1) and never leave your device.'], ['Forms', `Until a form service is connected, the demo and contact forms open a pre-filled email to ${site.email}; nothing is sent until you send it. Please do not include patient information.`], ['Cookies & analytics', 'None.']]],
